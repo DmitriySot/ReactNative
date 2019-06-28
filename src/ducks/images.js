@@ -25,10 +25,8 @@ export  function getImages() {
 		})
 		const getList = await fetch(`${baseUrl}/photos/?client_id=${token}`)
 			.then(list => list.json())
-			console.log(getList, 'getList')
 		const promiseList = getList.map(item => {
 			const url = `${baseUrl}/users/${item.user.username}/photos/?client_id=${token}`
-			// console.info("_url___", url )
 		return fetch(url)
 	})
 		const photos = await Promise.all(promiseList)
@@ -37,13 +35,11 @@ export  function getImages() {
 			return  item
 		})
 		const getPhoto = await Promise.all(promisePhoto)
-		console.info("__getPhoto__", getPhoto)
 
 		const list = getList.map((user, i) => {
 			user.photos = getPhoto[i]
 			return user
 		})
-		console.info("__list__", list)
 
 		dispatch({
 			type: GET_IMAGES,
@@ -51,7 +47,6 @@ export  function getImages() {
 		})
 	}
 }
-
 
 
 const initialState = {
