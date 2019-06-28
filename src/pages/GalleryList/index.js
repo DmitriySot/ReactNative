@@ -2,6 +2,7 @@ import React from 'react'
 import {Text, View, Button, Image, ScrollView, TouchableOpacity, StyleSheet} from 'react-native'
 import {connect} from 'react-redux'
 import {getImages} from '../../ducks/images'
+import {Bubbles} from 'react-native-loader'
 
  const styles=StyleSheet.create({
 	 galleryList: {
@@ -28,7 +29,7 @@ import {getImages} from '../../ducks/images'
 
 	 const {navigate} = props.navigation
 	 		const listImage = props.users.map(item => {
-				return <View style={styles.line}>{
+				return <View style={styles.line} key={item.id}>{
 						item.photos.map(image => {
 
 							return <View key={image.id} style={styles.galleryList}>
@@ -37,6 +38,7 @@ import {getImages} from '../../ducks/images'
 									style={{width: 50, height: 50}}
 									source={{uri: image.urls.small}}/>
 							</TouchableOpacity>
+
 							<View style={styles.column}>
 								<Text style={styles.bold}> {image.user.name}</Text>
 								<Text> {image.user.location}</Text>
@@ -48,7 +50,7 @@ import {getImages} from '../../ducks/images'
 				</View>
 		 }
 		)
-	// console.info("__props__", props)
+	if(props.loading) return <Bubbles size={10} color="#000" />
 	return (
 		<ScrollView>
 			{listImage}
